@@ -1,0 +1,230 @@
+{
+  "application_id": "APP-2026-EG-4D77FF2CBF22",
+  "applicant_type": "individual",
+  "submission_timestamp": "2026-10-13T17:32:13+03:00",
+  "is_returning_customer": null,
+  "documents": [
+    {
+      "document_type": "national_id",
+      "overall_quality_score": 1,
+      "is_tampered_suspected": null,
+      "extracted_fields": {
+        "full_name": "كريم حمدى على احمد",
+        "national_id": "30306052103394",
+        "date_of_birth": "2003-06-05",
+        "governorate": "الجيزة",
+        "address": "4 اكس اتش -كميوند دجلة بالمز 7 اكتوبر ثان - الجيّزه"
+      }
+    },
+    {
+      "document_type": "salary_certificate",
+      "overall_quality_score": 0.75,
+      "is_tampered_suspected": null,
+      "extracted_fields": {
+        "employer_name": "Careem Deliveries LLC",
+        "job_title": "Senior Care Ops Team Lead",
+        "declared_net_salary": null,
+        "employment_date": "2023-12-10"
+      }
+    },
+    {
+      "document_type": "bank_statement",
+      "overall_quality_score": 1,
+      "is_tampered_suspected": null,
+      "extracted_fields": {
+        "bank_name": "Banque Misr",
+        "account_number": "20833300053206",
+        "avg_monthly_net_inflow": 1165,
+        "avg_monthly_balance": 3724.83,
+        "income_regularity_score": null
+      }
+    },
+    {
+      "document_type": "iscore_report",
+      "overall_quality_score": 0.5,
+      "is_tampered_suspected": null,
+      "extracted_fields": {
+        "credit_score": 780,
+        "score_tier": "300 - 850",
+        "score_date": null
+      }
+    }
+  ],
+  "national_id_fields": {
+    "full_name": {
+      "value": "كريم حمدى على احمد",
+      "confidence": 0.7
+    },
+    "national_id": {
+      "value": "30306052103394",
+      "confidence": 0.9
+    },
+    "date_of_birth": {
+      "value": "2003-06-05",
+      "confidence": 0.85
+    },
+    "age_years": {
+      "value": 23,
+      "confidence": 0.85
+    },
+    "gender": {
+      "value": "ذكر",
+      "confidence": 0.75
+    },
+    "governorate": {
+      "value": "الجيزة",
+      "confidence": 0.7
+    },
+    "address": {
+      "value": "4 اكس اتش -كميوند دجلة بالمز 7 اكتوبر ثان - الجيّزه",
+      "confidence": 0.7
+    },
+    "profession_on_id": {
+      "value": "حاصل على بكالورّيوس فى الحاسبات والمعلومات تخصص اصَطناعى",
+      "confidence": 0.7
+    },
+    "marital_status_on_id": {
+      "value": "أعزب",
+      "confidence": 0.7
+    },
+    "id_expiry_date": {
+      "value": "2023-07-12",
+      "confidence": 0.85
+    }
+  },
+  "salary_certificate_fields": {
+    "employer_name": {
+      "value": "Careem Deliveries LLC",
+      "confidence": 0.7
+    },
+    "employer_sector": {
+      "value": "Multinational Corporation",
+      "confidence": 0.7
+    },
+    "job_title": {
+      "value": "Senior Care Ops Team Lead",
+      "confidence": 0.7
+    },
+    "declared_net_salary": {
+      "value": null,
+      "confidence": 0
+    },
+    "declared_gross_salary": {
+      "value": 28600,
+      "confidence": 0.8
+    },
+    "employment_date": {
+      "value": "2023-12-10",
+      "confidence": 0.85
+    },
+    "employment_tenure_years": {
+      "value": 2.8,
+      "confidence": 0.8
+    },
+    "issue_date": {
+      "value": "2024-10-05",
+      "confidence": 0.85
+    }
+  },
+  "bank_statement_fields": {
+    "bank_name": {
+      "value": "Banque Misr",
+      "confidence": 0.7
+    },
+    "account_number": {
+      "value": "20833300053206",
+      "confidence": 0.7
+    },
+    "statement_period_months": {
+      "value": 5,
+      "confidence": 0.8
+    },
+    "avg_monthly_net_inflow": {
+      "value": 1165,
+      "confidence": 0.8
+    },
+    "avg_monthly_balance": {
+      "value": 3724.83,
+      "confidence": 0.8
+    },
+    "min_monthly_balance": {
+      "value": 11,
+      "confidence": 0.8
+    },
+    "max_monthly_balance": {
+      "value": 22333,
+      "confidence": 0.8
+    },
+    "balance_volatility_std": {
+      "value": 6871.67,
+      "confidence": 0.8
+    },
+    "overdraft_frequency": {
+      "value": 0,
+      "confidence": 0.8
+    },
+    "returned_cheques_count": {
+      "value": 0,
+      "confidence": 0.8
+    },
+    "income_regularity_score": {
+      "value": null,
+      "confidence": 0
+    }
+  },
+  "iscore_report_fields": {
+    "is_available": true,
+    "credit_score": {
+      "value": 780,
+      "confidence": 0.8
+    },
+    "score_tier": {
+      "value": "300 - 850",
+      "confidence": 0.7
+    },
+    "score_date": {
+      "value": null,
+      "confidence": 0
+    },
+    "total_active_loans_limit": {
+      "value": null,
+      "confidence": 0
+    },
+    "total_outstanding_balance": {
+      "value": null,
+      "confidence": 0
+    },
+    "total_overdue_amount": {
+      "value": 0,
+      "confidence": 0.8
+    },
+    "max_days_past_due": {
+      "value": null,
+      "confidence": 0
+    },
+    "active_credit_cards_count": {
+      "value": null,
+      "confidence": 0
+    },
+    "total_credit_card_utilization": {
+      "value": null,
+      "confidence": 0
+    },
+    "bureau_facilities": []
+  },
+  "form_data": {
+    "requested_amount": null,
+    "tenure_months": null,
+    "requested_annuity": null,
+    "loan_purpose": null,
+    "goods_price": 0,
+    "family_status": null,
+    "children_count": null,
+    "family_members_count": null,
+    "housing_type": null,
+    "education_type": null,
+    "owns_car": null,
+    "owns_realty": null,
+    "branch_id": null
+  }
+}

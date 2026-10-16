@@ -1,0 +1,1143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Egyptian Document OCR & Banking AI</title>
+  <!-- Google Fonts: Outfit & Cairo -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --bg-dark: #080c14;
+      --bg-card: #111726;
+      --bg-card-hover: #161f33;
+      --border-color: rgba(255, 255, 255, 0.08);
+      --border-focus: #06b6d4;
+      --text-main: #f1f5f9;
+      --text-muted: #94a3b8;
+      --accent-cyan: #06b6d4;
+      --accent-emerald: #10b981;
+      --accent-amber: #f59e0b;
+      --accent-rose: #f43f5e;
+      --accent-indigo: #6366f1;
+      --radius-lg: 16px;
+      --radius-md: 10px;
+      --radius-sm: 6px;
+      --shadow-glow: 0 0 25px rgba(6, 182, 212, 0.15);
+      --font-main: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-ar: 'Cairo', sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      font-family: var(--font-main);
+      line-height: 1.5;
+      min-height: 100vh;
+      overflow-x: hidden;
+      background-image: 
+        radial-gradient(circle at 15% 20%, rgba(6, 182, 212, 0.08) 0%, transparent 40%),
+        radial-gradient(circle at 85% 70%, rgba(99, 102, 241, 0.08) 0%, transparent 40%);
+    }
+
+    /* Container */
+    .app-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 32px 24px 60px;
+    }
+
+    /* Header */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 36px;
+      padding-bottom: 24px;
+      border-bottom: 1px solid var(--border-color);
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .logo-badge {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #06b6d4, #6366f1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      box-shadow: 0 4px 14px rgba(6, 182, 212, 0.35);
+    }
+
+    .brand h1 {
+      font-size: 24px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      background: linear-gradient(90deg, #ffffff, #cbd5e1);
+      background-clip: text;
+      color: transparent;
+    }
+
+    .brand p {
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    .system-status {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .status-pill {
+      font-size: 12px;
+      padding: 6px 12px;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background-color: var(--accent-emerald);
+      box-shadow: 0 0 8px var(--accent-emerald);
+    }
+    .status-dot.warning {
+      background-color: var(--accent-amber);
+      box-shadow: 0 0 8px var(--accent-amber);
+    }
+
+    /* Navigation Tabs */
+    .tabs-bar {
+      display: flex;
+      gap: 8px;
+      background: rgba(255, 255, 255, 0.03);
+      padding: 6px;
+      border-radius: 12px;
+      border: 1px solid var(--border-color);
+      margin-bottom: 28px;
+      max-width: 500px;
+    }
+
+    .tab-btn {
+      flex: 1;
+      padding: 10px 16px;
+      border-radius: 8px;
+      border: none;
+      background: transparent;
+      color: var(--text-muted);
+      font-family: var(--font-main);
+      font-weight: 500;
+      font-size: 14px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .tab-btn.active {
+      background: var(--bg-card);
+      color: #fff;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    /* Document Selector (Single Mode) */
+    .single-selector {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+
+    .doc-type-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 14px 16px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .doc-type-card:hover {
+      background: var(--bg-card-hover);
+      border-color: rgba(6, 182, 212, 0.3);
+      transform: translateY(-2px);
+    }
+
+    .doc-type-card.active {
+      border-color: var(--accent-cyan);
+      background: rgba(6, 182, 212, 0.08);
+      box-shadow: 0 0 16px rgba(6, 182, 212, 0.15);
+    }
+
+    .doc-type-card .icon {
+      font-size: 22px;
+    }
+
+    .doc-type-card .title {
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .doc-type-card .subtitle {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    /* Dropzones Grid */
+    .dropzones-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 20px;
+      margin-bottom: 28px;
+    }
+
+    .dropzone-card {
+      background: var(--bg-card);
+      border: 2px dashed rgba(255, 255, 255, 0.12);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      text-align: center;
+      position: relative;
+      cursor: pointer;
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      min-height: 220px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .dropzone-card:hover, .dropzone-card.dragover {
+      border-color: var(--accent-cyan);
+      background: rgba(6, 182, 212, 0.05);
+      box-shadow: var(--shadow-glow);
+    }
+
+    .dropzone-icon {
+      font-size: 40px;
+      margin-bottom: 12px;
+      transition: transform 0.2s;
+    }
+
+    .dropzone-card:hover .dropzone-icon {
+      transform: scale(1.1);
+    }
+
+    .dropzone-title {
+      font-weight: 600;
+      font-size: 15px;
+      margin-bottom: 4px;
+    }
+
+    .dropzone-hint {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .file-input {
+      display: none;
+    }
+
+    /* Preview state inside dropzone */
+    .file-preview {
+      display: none;
+      width: 100%;
+      height: 100%;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    .preview-thumb {
+      max-height: 130px;
+      max-width: 90%;
+      border-radius: var(--radius-sm);
+      object-fit: cover;
+      margin-bottom: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    }
+
+    .file-meta {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-main);
+      max-width: 250px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .clear-file-btn {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      background: rgba(244, 63, 94, 0.2);
+      border: 1px solid var(--accent-rose);
+      color: var(--accent-rose);
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      font-weight: bold;
+      transition: all 0.2s;
+    }
+
+    .clear-file-btn:hover {
+      background: var(--accent-rose);
+      color: #fff;
+    }
+
+    /* Action bar */
+    .action-bar {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 36px;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #06b6d4 0%, #2563eb 100%);
+      color: #ffffff;
+      border: none;
+      padding: 14px 36px;
+      font-size: 16px;
+      font-weight: 600;
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: all 0.25s ease;
+      box-shadow: 0 4px 20px rgba(6, 182, 212, 0.35);
+    }
+
+    .btn-primary:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 25px rgba(6, 182, 212, 0.5);
+    }
+
+    .btn-primary:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      box-shadow: none;
+    }
+
+    /* Spinner */
+    .spinner {
+      width: 20px;
+      height: 20px;
+      border: 3px solid rgba(255, 255, 255, 0.3);
+      border-top-color: #fff;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      display: none;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* Results Container */
+    .results-container {
+      display: none;
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      padding: 28px;
+      animation: fadeIn 0.4s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .results-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border-color);
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .results-title {
+      font-size: 18px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .view-toggle {
+      display: flex;
+      gap: 6px;
+    }
+
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      padding: 8px 14px;
+      font-size: 13px;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+
+    .btn-secondary:hover, .btn-secondary.active {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    /* Egyptian National ID Card Mockup */
+    .id-card-view {
+      background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 14px;
+      padding: 24px;
+      position: relative;
+      margin-bottom: 24px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+    }
+
+    .id-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      padding-bottom: 12px;
+    }
+
+    .id-card-header .gov-title {
+      font-family: var(--font-ar);
+      font-weight: 700;
+      font-size: 16px;
+      color: #fbbf24;
+    }
+
+    .id-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+    }
+
+    .id-field {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .id-field-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    .id-field-value {
+      font-size: 15px;
+      font-weight: 600;
+      color: #fff;
+    }
+
+    .id-field-value.arabic {
+      font-family: var(--font-ar);
+      direction: rtl;
+      text-align: right;
+    }
+
+    .id-number-highlight {
+      font-family: var(--font-mono);
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      color: #38bdf8;
+      background: rgba(56, 189, 248, 0.1);
+      padding: 6px 12px;
+      border-radius: 6px;
+      display: inline-block;
+      margin-top: 4px;
+    }
+
+    /* Metric Cards Grid */
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .metric-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 18px;
+    }
+
+    .metric-label {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+
+    .metric-value {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .metric-sub {
+      font-size: 11px;
+      color: var(--accent-emerald);
+      margin-top: 4px;
+    }
+
+    /* JSON Viewer */
+    .json-viewer {
+      background: #090d16;
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 16px;
+      font-family: var(--font-mono);
+      font-size: 13px;
+      color: #38bdf8;
+      max-height: 480px;
+      overflow: auto;
+      white-space: pre-wrap;
+      word-break: break-word;
+      display: none;
+    }
+
+    /* Toast Notification */
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: #1e293b;
+      border: 1px solid var(--border-color);
+      color: #fff;
+      padding: 12px 20px;
+      border-radius: var(--radius-md);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+      transform: translateY(100px);
+      opacity: 0;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .toast.show {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .dropzones-grid {
+        grid-template-columns: 1fr;
+      }
+      .app-container {
+        padding: 20px 14px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="app-container">
+    <!-- Header -->
+    <header>
+      <div class="brand">
+        <div class="logo-badge">🇪🇬</div>
+        <div>
+          <h1>Egyptian Document OCR AI</h1>
+          <p>Instant Drag & Drop Processing for National IDs, Banking & Credit Reports</p>
+        </div>
+      </div>
+      
+      <div class="system-status">
+        <div class="status-pill" id="tessPill">
+          <span class="status-dot" id="tessDot"></span>
+          <span id="tessText">Tesseract: Checking...</span>
+        </div>
+        <div class="status-pill" id="ollamaPill">
+          <span class="status-dot warning" id="ollamaDot"></span>
+          <span id="ollamaText">Ollama: Fallback Mode</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Navigation Mode Tabs -->
+    <div class="tabs-bar">
+      <button class="tab-btn active" id="tabSingle" onclick="switchMode('single')">
+        <span>📄 Single Document</span>
+      </button>
+      <button class="tab-btn" id="tabFull" onclick="switchMode('full')">
+        <span>📁 Full Dossier (All 5)</span>
+      </button>
+    </div>
+
+    <!-- Document Sub-Selector (Single Mode Only) -->
+    <div class="single-selector" id="singleSelector">
+      <div class="doc-type-card active" onclick="selectDocType('nid')">
+        <span class="icon">🆔</span>
+        <div>
+          <div class="title">National ID</div>
+          <div class="subtitle">بطاقة الرقم القومي</div>
+        </div>
+      </div>
+      <div class="doc-type-card" onclick="selectDocType('bank')">
+        <span class="icon">🏦</span>
+        <div>
+          <div class="title">Bank Statement</div>
+          <div class="subtitle">كشف حساب بنكي</div>
+        </div>
+      </div>
+      <div class="doc-type-card" onclick="selectDocType('salary')">
+        <span class="icon">💼</span>
+        <div>
+          <div class="title">Salary Certificate</div>
+          <div class="subtitle">مفردات مرتب</div>
+        </div>
+      </div>
+      <div class="doc-type-card" onclick="selectDocType('iscore')">
+        <span class="icon">📊</span>
+        <div>
+          <div class="title">iScore Report</div>
+          <div class="subtitle">تقرير الآي سكور</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Dropzones Container -->
+    <div class="dropzones-grid" id="dropzonesGrid">
+      <!-- National ID Front -->
+      <div class="dropzone-card" id="dz_nid_front" onclick="triggerFileInput('file_nid_front')">
+        <div class="dropzone-default">
+          <div class="dropzone-icon">🪪</div>
+          <div class="dropzone-title">National ID — Front (الوجه)</div>
+          <div class="dropzone-hint">Drag & drop front image or click to browse</div>
+        </div>
+        <div class="file-preview" id="prev_nid_front">
+          <button class="clear-file-btn" onclick="clearFile(event, 'nid_front')">✕</button>
+          <img class="preview-thumb" id="thumb_nid_front" src="" alt="Front ID">
+          <div class="file-meta" id="meta_nid_front"></div>
+        </div>
+        <input type="file" id="file_nid_front" class="file-input" accept="image/*,.pdf" onchange="handleFileSelected(this, 'nid_front')">
+      </div>
+
+      <!-- National ID Back -->
+      <div class="dropzone-card" id="dz_nid_back" onclick="triggerFileInput('file_nid_back')">
+        <div class="dropzone-default">
+          <div class="dropzone-icon">🔄</div>
+          <div class="dropzone-title">National ID — Back (الظهر)</div>
+          <div class="dropzone-hint">Drag & drop back image or click to browse</div>
+        </div>
+        <div class="file-preview" id="prev_nid_back">
+          <button class="clear-file-btn" onclick="clearFile(event, 'nid_back')">✕</button>
+          <img class="preview-thumb" id="thumb_nid_back" src="" alt="Back ID">
+          <div class="file-meta" id="meta_nid_back"></div>
+        </div>
+        <input type="file" id="file_nid_back" class="file-input" accept="image/*,.pdf" onchange="handleFileSelected(this, 'nid_back')">
+      </div>
+
+      <!-- Bank Statement -->
+      <div class="dropzone-card" id="dz_bank" style="display: none;" onclick="triggerFileInput('file_bank')">
+        <div class="dropzone-default">
+          <div class="dropzone-icon">🏦</div>
+          <div class="dropzone-title">Bank Statement (كشف الحساب)</div>
+          <div class="dropzone-hint">Upload PDF or image</div>
+        </div>
+        <div class="file-preview" id="prev_bank">
+          <button class="clear-file-btn" onclick="clearFile(event, 'bank')">✕</button>
+          <img class="preview-thumb" id="thumb_bank" src="" alt="Bank Statement">
+          <div class="file-meta" id="meta_bank"></div>
+        </div>
+        <input type="file" id="file_bank" class="file-input" accept="image/*,.pdf" onchange="handleFileSelected(this, 'bank')">
+      </div>
+
+      <!-- Salary Certificate -->
+      <div class="dropzone-card" id="dz_salary" style="display: none;" onclick="triggerFileInput('file_salary')">
+        <div class="dropzone-default">
+          <div class="dropzone-icon">💼</div>
+          <div class="dropzone-title">Salary Certificate (مفردات المرتب)</div>
+          <div class="dropzone-hint">Upload PDF or image</div>
+        </div>
+        <div class="file-preview" id="prev_salary">
+          <button class="clear-file-btn" onclick="clearFile(event, 'salary')">✕</button>
+          <img class="preview-thumb" id="thumb_salary" src="" alt="Salary Certificate">
+          <div class="file-meta" id="meta_salary"></div>
+        </div>
+        <input type="file" id="file_salary" class="file-input" accept="image/*,.pdf" onchange="handleFileSelected(this, 'salary')">
+      </div>
+
+      <!-- iScore Report -->
+      <div class="dropzone-card" id="dz_iscore" style="display: none;" onclick="triggerFileInput('file_iscore')">
+        <div class="dropzone-default">
+          <div class="dropzone-icon">📊</div>
+          <div class="dropzone-title">iScore Report (الآي سكور)</div>
+          <div class="dropzone-hint">Upload PDF or image</div>
+        </div>
+        <div class="file-preview" id="prev_iscore">
+          <button class="clear-file-btn" onclick="clearFile(event, 'iscore')">✕</button>
+          <img class="preview-thumb" id="thumb_iscore" src="" alt="iScore">
+          <div class="file-meta" id="meta_iscore"></div>
+        </div>
+        <input type="file" id="file_iscore" class="file-input" accept="image/*,.pdf" onchange="handleFileSelected(this, 'iscore')">
+      </div>
+    </div>
+
+    <!-- Action Button -->
+    <div class="action-bar">
+      <button class="btn-primary" id="processBtn" onclick="processDocuments()" disabled>
+        <span class="spinner" id="btnSpinner"></span>
+        <span id="btnText">✨ Process & Extract Data</span>
+      </button>
+    </div>
+
+    <!-- Results Section -->
+    <div class="results-container" id="resultsContainer">
+      <div class="results-header">
+        <div class="results-title">
+          <span>🎯 Extraction Results</span>
+          <span style="font-size: 13px; color: var(--accent-emerald);" id="procTime"></span>
+        </div>
+        <div class="view-toggle">
+          <button class="btn-secondary active" id="btnVisualView" onclick="setViewMode('visual')">🎨 Visual Card</button>
+          <button class="btn-secondary" id="btnJsonView" onclick="setViewMode('json')">{ } Raw JSON</button>
+          <button class="btn-secondary" onclick="copyJson()">📋 Copy</button>
+          <button class="btn-secondary" onclick="downloadJson()">💾 Download</button>
+        </div>
+      </div>
+
+      <!-- Visual Card View -->
+      <div id="visualView">
+        <!-- National ID Mockup Section -->
+        <div class="id-card-view" id="idCardResult" style="display: none;">
+          <div class="id-card-header">
+            <span class="gov-title">جمهورية مصر العربية — بطاقة تحقيق الشخصية</span>
+            <span style="font-size: 12px; color: var(--accent-cyan);" id="nidGovBadge">القاهرة</span>
+          </div>
+          <div class="id-grid">
+            <div class="id-field">
+              <span class="id-field-label">Full Name (الاسم)</span>
+              <span class="id-field-value arabic" id="nidName">—</span>
+            </div>
+            <div class="id-field">
+              <span class="id-field-label">National ID (الرقم القومي)</span>
+              <span class="id-number-highlight" id="nidNumber">—</span>
+            </div>
+            <div class="id-field">
+              <span class="id-field-label">Date of Birth (تاريخ الميلاد)</span>
+              <span class="id-field-value" id="nidDob">—</span>
+            </div>
+            <div class="id-field">
+              <span class="id-field-label">Age (العمر)</span>
+              <span class="id-field-value" id="nidAge">—</span>
+            </div>
+            <div class="id-field">
+              <span class="id-field-label">Gender (النوع)</span>
+              <span class="id-field-value" id="nidGender">—</span>
+            </div>
+            <div class="id-field">
+              <span class="id-field-label">Profession (المهنة)</span>
+              <span class="id-field-value arabic" id="nidJob">—</span>
+            </div>
+            <div class="id-field">
+              <span class="id-field-label">Address (العنوان)</span>
+              <span class="id-field-value arabic" id="nidAddress">—</span>
+            </div>
+            <div class="id-field">
+              <span class="id-field-label">Expiry Date (سارية حتى)</span>
+              <span class="id-field-value" id="nidExpiry">—</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Financial & Other Metrics Grid -->
+        <div class="metrics-grid" id="metricsGrid">
+          <!-- Dynamic cards inserted via JS -->
+        </div>
+      </div>
+
+      <!-- Raw JSON View -->
+      <pre class="json-viewer" id="jsonViewer"></pre>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div class="toast" id="toast">📋 JSON copied to clipboard!</div>
+
+  <script>
+    let currentMode = 'single';
+    let currentSingleDoc = 'nid';
+    const uploadedFiles = {
+      nid_front: null,
+      nid_back: null,
+      bank: null,
+      salary: null,
+      iscore: null
+    };
+    let latestResult = null;
+
+    // Check system status on page load
+    async function checkSystem() {
+      try {
+        const res = await fetch('/api/v1/system-status');
+        const data = await res.json();
+        const tessText = document.getElementById('tessText');
+        const tessDot = document.getElementById('tessDot');
+        if (data.tesseract_installed) {
+          tessText.innerText = 'Tesseract: Ready (ara+eng)';
+          tessDot.className = 'status-dot';
+        } else {
+          tessText.innerText = 'Tesseract: Not Found in Path';
+          tessDot.className = 'status-dot warning';
+        }
+        const ollamaText = document.getElementById('ollamaText');
+        const ollamaDot = document.getElementById('ollamaDot');
+        if (data.ollama_running) {
+          ollamaText.innerText = 'Ollama: Active';
+          ollamaDot.className = 'status-dot';
+        } else {
+          ollamaText.innerText = 'Ollama: Fallback Rules';
+          ollamaDot.className = 'status-dot warning';
+        }
+      } catch (e) {
+        document.getElementById('tessText').innerText = 'Backend: Active';
+      }
+    }
+    checkSystem();
+
+    // Mode Switcher (Single vs Full)
+    function switchMode(mode) {
+      currentMode = mode;
+      document.getElementById('tabSingle').classList.toggle('active', mode === 'single');
+      document.getElementById('tabFull').classList.toggle('active', mode === 'full');
+      document.getElementById('singleSelector').style.display = mode === 'single' ? 'grid' : 'none';
+      
+      if (mode === 'full') {
+        // Show all 5 dropzones
+        ['nid_front', 'nid_back', 'bank', 'salary', 'iscore'].forEach(id => {
+          document.getElementById('dz_' + id).style.display = 'flex';
+        });
+      } else {
+        selectDocType(currentSingleDoc);
+      }
+      updateProcessButton();
+    }
+
+    // Select Document Type in Single Mode
+    function selectDocType(type) {
+      currentSingleDoc = type;
+      document.querySelectorAll('.doc-type-card').forEach((card, idx) => {
+        card.classList.remove('active');
+      });
+      event?.currentTarget?.classList?.add('active');
+
+      // Hide all dropzones first
+      ['nid_front', 'nid_back', 'bank', 'salary', 'iscore'].forEach(id => {
+        document.getElementById('dz_' + id).style.display = 'none';
+      });
+
+      // Show relevant dropzones
+      if (type === 'nid') {
+        document.getElementById('dz_nid_front').style.display = 'flex';
+        document.getElementById('dz_nid_back').style.display = 'flex';
+      } else if (type === 'bank') {
+        document.getElementById('dz_bank').style.display = 'flex';
+      } else if (type === 'salary') {
+        document.getElementById('dz_salary').style.display = 'flex';
+      } else if (type === 'iscore') {
+        document.getElementById('dz_iscore').style.display = 'flex';
+      }
+      updateProcessButton();
+    }
+
+    // Trigger file input
+    function triggerFileInput(id) {
+      document.getElementById(id).click();
+    }
+
+    // Handle Drag & Drop events
+    document.querySelectorAll('.dropzone-card').forEach(zone => {
+      zone.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        zone.classList.add('dragover');
+      });
+      zone.addEventListener('dragleave', () => {
+        zone.classList.remove('dragover');
+      });
+      zone.addEventListener('drop', (e) => {
+        e.preventDefault();
+        zone.classList.remove('dragover');
+        const key = zone.id.replace('dz_', '');
+        if (e.dataTransfer.files.length > 0) {
+          const file = e.dataTransfer.files[0];
+          setFile(key, file);
+        }
+      });
+    });
+
+    function handleFileSelected(input, key) {
+      if (input.files.length > 0) {
+        setFile(key, input.files[0]);
+      }
+    }
+
+    function setFile(key, file) {
+      uploadedFiles[key] = file;
+      const dz = document.getElementById('dz_' + key);
+      const def = dz.querySelector('.dropzone-default');
+      const prev = document.getElementById('prev_' + key);
+      const thumb = document.getElementById('thumb_' + key);
+      const meta = document.getElementById('meta_' + key);
+
+      def.style.display = 'none';
+      prev.style.display = 'flex';
+      meta.innerText = `${file.name} (${(file.size / 1024).toFixed(1)} KB)`;
+
+      if (file.type.startsWith('image/')) {
+        const reader = new FileReader();
+        reader.onload = (e) => { thumb.src = e.target.result; };
+        reader.readAsDataURL(file);
+      } else {
+        // PDF placeholder
+        thumb.src = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='120' viewBox='0 0 24 24' fill='%23ef4444'><path d='M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-9.5 8.5h-2v2h2c.8 0 1.5-.7 1.5-1.5s-.7-.5-1.5-.5zm5 0h-2v4h2c.8 0 1.5-.7 1.5-1.5v-1c0-.8-.7-1.5-1.5-1.5z'/></svg>";
+      }
+      updateProcessButton();
+    }
+
+    function clearFile(event, key) {
+      event.stopPropagation();
+      uploadedFiles[key] = null;
+      const dz = document.getElementById('dz_' + key);
+      dz.querySelector('.dropzone-default').style.display = 'block';
+      document.getElementById('prev_' + key).style.display = 'none';
+      document.getElementById('file_' + key).value = '';
+      updateProcessButton();
+    }
+
+    function updateProcessButton() {
+      const btn = document.getElementById('processBtn');
+      let ready = false;
+      if (currentMode === 'single') {
+        if (currentSingleDoc === 'nid') ready = !!(uploadedFiles.nid_front && uploadedFiles.nid_back);
+        else if (currentSingleDoc === 'bank') ready = !!uploadedFiles.bank;
+        else if (currentSingleDoc === 'salary') ready = !!uploadedFiles.salary;
+        else if (currentSingleDoc === 'iscore') ready = !!uploadedFiles.iscore;
+      } else {
+        // In full mode, ready if any file is uploaded
+        ready = Object.values(uploadedFiles).some(f => f !== null);
+      }
+      btn.disabled = !ready;
+    }
+
+    // Process & Extract
+    async function processDocuments() {
+      const btn = document.getElementById('processBtn');
+      const spinner = document.getElementById('btnSpinner');
+      const btnText = document.getElementById('btnText');
+
+      btn.disabled = true;
+      spinner.style.display = 'inline-block';
+      btnText.innerText = 'Extracting Data...';
+
+      const formData = new FormData();
+      if (uploadedFiles.nid_front) formData.append('national_id_front', uploadedFiles.nid_front);
+      if (uploadedFiles.nid_back) formData.append('national_id_back', uploadedFiles.nid_back);
+      if (uploadedFiles.bank) formData.append('bank_statement', uploadedFiles.bank);
+      if (uploadedFiles.salary) formData.append('salary_cert', uploadedFiles.salary);
+      if (uploadedFiles.iscore) formData.append('iscore', uploadedFiles.iscore);
+
+      const startTime = performance.now();
+      try {
+        const response = await fetch('/api/v1/ocr/process-documents', {
+          method: 'POST',
+          body: formData
+        });
+
+        if (!response.ok) {
+          const err = await response.json();
+          throw new Error(err.detail || 'Processing failed');
+        }
+
+        const data = await response.json();
+        latestResult = data;
+        const duration = ((performance.now() - startTime) / 1000).toFixed(1);
+        document.getElementById('procTime').innerText = `Completed in ${duration}s`;
+
+        displayResults(data);
+      } catch (err) {
+        alert('Error processing documents: ' + err.message);
+      } finally {
+        btn.disabled = false;
+        spinner.style.display = 'none';
+        btnText.innerText = '✨ Process & Extract Data';
+      }
+    }
+
+    function displayResults(data) {
+      const container = document.getElementById('resultsContainer');
+      container.style.display = 'block';
+
+      // JSON viewer content
+      document.getElementById('jsonViewer').innerText = JSON.stringify(data, null, 2);
+
+      // Populate Visual Cards
+      const nidCard = document.getElementById('idCardResult');
+      const metricsGrid = document.getElementById('metricsGrid');
+      metricsGrid.innerHTML = '';
+
+      // 1. National ID Fields
+      const nid = data.national_id_fields || {};
+      if (nid.national_id?.value || nid.full_name?.value) {
+        nidCard.style.display = 'block';
+        document.getElementById('nidName').innerText = nid.full_name?.value || 'غير متوفر';
+        document.getElementById('nidNumber').innerText = nid.national_id?.value || '—';
+        document.getElementById('nidDob').innerText = nid.date_of_birth?.value || '—';
+        document.getElementById('nidAge').innerText = nid.age_years?.value ? `${nid.age_years.value} years` : '—';
+        document.getElementById('nidGender').innerText = nid.gender?.value || '—';
+        document.getElementById('nidGovBadge').innerText = nid.governorate?.value || 'مصر';
+        document.getElementById('nidJob').innerText = nid.profession_on_id?.value || '—';
+        document.getElementById('nidAddress').innerText = nid.address?.value || '—';
+        document.getElementById('nidExpiry').innerText = nid.id_expiry_date?.value || '—';
+      } else {
+        nidCard.style.display = 'none';
+      }
+
+      // 2. Bank Statement
+      const bank = data.bank_statement_fields || {};
+      if (bank.bank_name?.value || bank.avg_monthly_balance?.value) {
+        metricsGrid.innerHTML += `
+          <div class="metric-card">
+            <div class="metric-label">🏦 Bank Name</div>
+            <div class="metric-value">${bank.bank_name?.value || 'Unknown Bank'}</div>
+            <div class="metric-sub">Account: ${bank.account_number?.value || 'N/A'}</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-label">💰 Avg Monthly Balance</div>
+            <div class="metric-value">${bank.avg_monthly_balance?.value ? bank.avg_monthly_balance.value.toLocaleString() + ' EGP' : '—'}</div>
+            <div class="metric-sub">Net Inflow: ${bank.avg_monthly_net_inflow?.value ? bank.avg_monthly_net_inflow.value.toLocaleString() + ' EGP' : '—'}</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-label">📈 Income Regularity</div>
+            <div class="metric-value">${bank.income_regularity_score?.value !== undefined ? (bank.income_regularity_score.value * 100).toFixed(0) + '%' : '—'}</div>
+            <div class="metric-sub">Overdrafts: ${bank.overdraft_frequency?.value || 0}</div>
+          </div>
+        `;
+      }
+
+      // 3. Salary Certificate
+      const sal = data.salary_certificate_fields || {};
+      if (sal.employer_name?.value || sal.declared_net_salary?.value) {
+        metricsGrid.innerHTML += `
+          <div class="metric-card">
+            <div class="metric-label">💼 Employer</div>
+            <div class="metric-value">${sal.employer_name?.value || '—'}</div>
+            <div class="metric-sub">Job: ${sal.job_title?.value || '—'}</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-label">💵 Net Monthly Salary</div>
+            <div class="metric-value">${sal.declared_net_salary?.value ? sal.declared_net_salary.value.toLocaleString() + ' EGP' : '—'}</div>
+            <div class="metric-sub">Gross: ${sal.declared_gross_salary?.value ? sal.declared_gross_salary.value.toLocaleString() + ' EGP' : '—'}</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-label">📅 Tenure</div>
+            <div class="metric-value">${sal.employment_tenure_years?.value ? sal.employment_tenure_years.value + ' years' : '—'}</div>
+            <div class="metric-sub">Sector: ${sal.employer_sector?.value || '—'}</div>
+          </div>
+        `;
+      }
+
+      // 4. iScore
+      const isc = data.iscore_report_fields || {};
+      if (isc.credit_score?.value) {
+        metricsGrid.innerHTML += `
+          <div class="metric-card">
+            <div class="metric-label">📊 iScore Credit Score</div>
+            <div class="metric-value" style="color: #38bdf8;">${isc.credit_score.value} / 850</div>
+            <div class="metric-sub">Tier: ${isc.score_tier?.value || 'Egyptian Scale'}</div>
+          </div>
+        `;
+      }
+
+      container.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    function setViewMode(mode) {
+      document.getElementById('btnVisualView').classList.toggle('active', mode === 'visual');
+      document.getElementById('btnJsonView').classList.toggle('active', mode === 'json');
+      document.getElementById('visualView').style.display = mode === 'visual' ? 'block' : 'none';
+      document.getElementById('jsonViewer').style.display = mode === 'json' ? 'block' : 'none';
+    }
+
+    function copyJson() {
+      if (!latestResult) return;
+      navigator.clipboard.writeText(JSON.stringify(latestResult, null, 2)).then(() => {
+        const toast = document.getElementById('toast');
+        toast.classList.add('show');
+        setTimeout(() => toast.classList.remove('show'), 2500);
+      });
+    }
+
+    function downloadJson() {
+      if (!latestResult) return;
+      const blob = new Blob([JSON.stringify(latestResult, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `ocr_result_${Date.now()}.json`;
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+  </script>
+</body>
+</html>

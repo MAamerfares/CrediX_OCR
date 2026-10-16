@@ -1,0 +1,230 @@
+{
+  "application_id": "APP-2026-EG-408D1B240EDE",
+  "applicant_type": "individual",
+  "submission_timestamp": "2026-10-13T21:26:00+03:00",
+  "is_returning_customer": null,
+  "documents": [
+    {
+      "document_type": "national_id",
+      "overall_quality_score": 1.0,
+      "is_tampered_suspected": null,
+      "extracted_fields": {
+        "full_name": "محمد آمر بكر عبدالله فارس",
+        "national_id": "30405251203053",
+        "date_of_birth": "2004-05-25",
+        "governorate": "الدقهلية",
+        "address": "شن بكرفارس -ت الشئون الاجتماعيه المنصوره أوَّل - الدقهلية"
+      }
+    },
+    {
+      "document_type": "salary_certificate",
+      "overall_quality_score": 0.0,
+      "is_tampered_suspected": null,
+      "extracted_fields": {
+        "employer_name": null,
+        "job_title": null,
+        "declared_net_salary": null,
+        "employment_date": null
+      }
+    },
+    {
+      "document_type": "bank_statement",
+      "overall_quality_score": 0.0,
+      "is_tampered_suspected": null,
+      "extracted_fields": {
+        "bank_name": null,
+        "account_number": null,
+        "avg_monthly_net_inflow": null,
+        "avg_monthly_balance": null,
+        "income_regularity_score": null
+      }
+    },
+    {
+      "document_type": "iscore_report",
+      "overall_quality_score": 0.0,
+      "is_tampered_suspected": null,
+      "extracted_fields": {
+        "credit_score": null,
+        "score_tier": null,
+        "score_date": null
+      }
+    }
+  ],
+  "national_id_fields": {
+    "full_name": {
+      "value": "محمد آمر بكر عبدالله فارس",
+      "confidence": 0.7
+    },
+    "national_id": {
+      "value": "30405251203053",
+      "confidence": 0.9
+    },
+    "date_of_birth": {
+      "value": "2004-05-25",
+      "confidence": 0.85
+    },
+    "age_years": {
+      "value": 22,
+      "confidence": 0.85
+    },
+    "gender": {
+      "value": "ذكر",
+      "confidence": 0.75
+    },
+    "governorate": {
+      "value": "الدقهلية",
+      "confidence": 0.7
+    },
+    "address": {
+      "value": "شن بكرفارس -ت الشئون الاجتماعيه المنصوره أوَّل - الدقهلية",
+      "confidence": 0.7
+    },
+    "profession_on_id": {
+      "value": "طالب",
+      "confidence": 0.7
+    },
+    "marital_status_on_id": {
+      "value": "أعزب",
+      "confidence": 0.7
+    },
+    "id_expiry_date": {
+      "value": null,
+      "confidence": 0.0
+    }
+  },
+  "salary_certificate_fields": {
+    "employer_name": {
+      "value": null,
+      "confidence": 0.0
+    },
+    "employer_sector": {
+      "value": null,
+      "confidence": 0.0
+    },
+    "job_title": {
+      "value": null,
+      "confidence": 0.0
+    },
+    "declared_net_salary": {
+      "value": null,
+      "confidence": 0.0
+    },
+    "declared_gross_salary": {
+      "value": null,
+      "confidence": 0.0
+    },
+    "employment_date": {
+      "value": null,
+      "confidence": 0.0
+    },
+    "employment_tenure_years": {
+      "value": null,
+      "confidence": 0.0
+    },
+    "issue_date": {
+      "value": null,
+      "confidence": 0.0
+    }
+  },
+  "bank_statement_fields": {
+    "bank_name": {
+      "value": null,
+      "confidence": 0.0
+    },
+    "account_number": {
+      "value": null,
+      "confidence": 0.0
+    },
+    "statement_period_months": {
+      "value": null,
+      "confidence": 0.0
+    },
+    "avg_monthly_net_inflow": {
+      "value": null,
+      "confidence": 0.0
+    },
+    "avg_monthly_balance": {
+      "value": null,
+      "confidence": 0.0
+    },
+    "min_monthly_balance": {
+      "value": null,
+      "confidence": 0.0
+    },
+    "max_monthly_balance": {
+      "value": null,
+      "confidence": 0.0
+    },
+    "balance_volatility_std": {
+      "value": null,
+      "confidence": 0.0
+    },
+    "overdraft_frequency": {
+      "value": null,
+      "confidence": 0.0
+    },
+    "returned_cheques_count": {
+      "value": null,
+      "confidence": 0.0
+    },
+    "income_regularity_score": {
+      "value": null,
+      "confidence": 0.0
+    }
+  },
+  "iscore_report_fields": {
+    "is_available": false,
+    "credit_score": {
+      "value": null,
+      "confidence": 0.0
+    },
+    "score_tier": {
+      "value": null,
+      "confidence": 0.0
+    },
+    "score_date": {
+      "value": null,
+      "confidence": 0.0
+    },
+    "total_active_loans_limit": {
+      "value": null,
+      "confidence": 0.0
+    },
+    "total_outstanding_balance": {
+      "value": null,
+      "confidence": 0.0
+    },
+    "total_overdue_amount": {
+      "value": null,
+      "confidence": 0.0
+    },
+    "max_days_past_due": {
+      "value": null,
+      "confidence": 0.0
+    },
+    "active_credit_cards_count": {
+      "value": null,
+      "confidence": 0.0
+    },
+    "total_credit_card_utilization": {
+      "value": null,
+      "confidence": 0.0
+    },
+    "bureau_facilities": []
+  },
+  "form_data": {
+    "requested_amount": null,
+    "tenure_months": null,
+    "requested_annuity": null,
+    "loan_purpose": null,
+    "goods_price": 0.0,
+    "family_status": null,
+    "children_count": null,
+    "family_members_count": null,
+    "housing_type": null,
+    "education_type": null,
+    "owns_car": null,
+    "owns_realty": null,
+    "branch_id": null
+  }
+}
